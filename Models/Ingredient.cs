@@ -1,5 +1,7 @@
 // Public class for Ingredients
+using System;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.VisualBasic;
 
 public class Ingredient
 {
@@ -25,5 +27,39 @@ public class Ingredient
 
     //Methods
 
+    // IncreaseQuantity: Increase the quantity of an ingredient 
+    public void IncreaseQuantity(int amount)
+    {
+        Quantity += amount;
+    }
+
+    // DecreaseQuantity: Decrease the quantity of an ingredient
+    public void DecreaseQuantity(int amount)
+    {   
+        if (Quantity >= amount)
+        {
+            Quantity -= amount;
+        } else
+        {
+           throw new InvalidOperationException("Not enough quantity to decrease");
+        }
+    }
+
+    // IsAvailable: Checks if there is enough quantity of an ingredient for a recipe
+    public bool IsAvailable(int requiredAmount)
+    {
+        return Quantity >= requiredAmount;
+    }
+
+    // Clone: Clones an instance of an ingredient
+    public Ingredient Clone()
+    {
+       return new Ingredient
+       {
+        Name = Name,
+        Quantity = Quantity,
+        Unit = Unit
+       };
+    }
 
 }   
