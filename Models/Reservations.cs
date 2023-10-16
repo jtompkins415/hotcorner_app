@@ -3,6 +3,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using MailKitSimplified.Sender.Services;
+using MailKitSimplified.Sender.Models;
 
 public class Reservation
 {
@@ -13,10 +14,13 @@ public class Reservation
     public required Guid CustomerId {get; set;}
     [MaxLength(255)]
     public required string CustomerName {get; set;}
+    public required string CustomerEmail {get; set;}
     public required DateTime ReservationTime {get; set;}
     public required Guid TableId {get; set;}
     public required int TableNumber {get; set;}
     public required string ReservationStatus {get; set;}
+
+    private readonly ISmtpSenderFactory smtpSenderFactory;
 
     //Constructors & Nested Classes
 
@@ -28,6 +32,7 @@ public class Reservation
         ReservationId = Guid.NewGuid();
         CustomerId = customer.CustomerId;
         CustomerName = customer.Name;
+        CustomerEmail = customer.Email;
         ReservationTime = reservationTime;
         TableId = table.TableId;
         TableNumber = table.TableNumber;
@@ -42,6 +47,12 @@ public class Reservation
         }
 
     }
+
+    public Reservation(ISmtpSenderFactory smtpSenderFactory)
+    {
+        this.smtpSenderFactory = smtpSenderFactory;
+    }
+
     //ReserverationDetails: Class that holds details of a specific reservation
     public class ReservationDetails
     {
@@ -109,5 +120,36 @@ public class Reservation
         return ReservationTime.Date == DateTime.Now.Date;
     }
 
-    //SendConfirmationEmail: Send a confirmation email to the customer
+    //SendReservationConfirmationEmail: Send a confirmation email to the customer
+    public void SendReservationConfirmationEmail()
+    {
+        SmtpSender newSender = smtpSenderFactory.CreateSmtpSender();
+
+        var confirmationEmail = newSender.WriteEmail
+            .From("hotcorneradmin@hotcornerapp.com")
+            .To($"{CustomerEmail}")
+            .Subject($"HotCorner! Reservation Confirmation: {ReservationId} - {ReservationTime}")
+            .BodyHtml($"You reservation is confirmed!\nReservation Id:{ReservationId}\nGuest Name: {CustomerName}\nDate: {ReservationTime}")
+            .SaveTemplate();
+        
+        confirmationEmail.Send();
+    }
+
+    //SendReservationReminderEmail: Send a reminder email to the customer
+    public void SendReservationReminderEmail()
+    {
+        if(ReservationTime.Date == DateTime.Now)
+        {
+            SmtpSender newSender = smtpSenderFactory.CreateSmtpSender();
+
+            var confirmationEmail = newSender.WriteEmail
+                .From("hotcorneradmin@hotcornerapp.com")
+                .To($"{CustomerEmail}")
+                .Subject($"HotCorner! Reservation Reminder: {ReservationId} - {ReservationTime}")
+                .BodyHtml($"This is a reminder for you reservation today!\nReservation Id:{ReservationId}\nGuest Name: {CustomerName}\nDate: {ReservationTime}")
+                .SaveTemplate();
+            
+            confirmationEmail.Send();
+        }
+    }
 }
