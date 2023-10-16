@@ -1,9 +1,12 @@
 using ConsoleApp.PostgreSQL;
+using MailKitSimplified.Sender.Models;
+using MailKitSimplified.Sender.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 public class Startup
 {
@@ -22,7 +25,13 @@ public class Startup
         });
 
         services.AddRazorPages();
-    }
+
+        //Configure the EmailSenderOptions using data from appsettings.json
+        services.Configure<EmailSenderOptions>(Configuration.GetSection("EmailSenderOptions"));
+
+        //Create a factor to instantiate SmtpSender using EmailSenderOptions
+        services.AddSingleton<ISmtpSenderFactory, SmtpSenderFactory>();
+    } 
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
