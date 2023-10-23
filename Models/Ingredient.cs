@@ -3,63 +3,67 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.VisualBasic;
 
-public class Ingredient
+namespace HotCorner.Model
 {
-    //Properties
-    [Key]
-    public Guid Id {get; set;}
-    public required string Name {get; set;}
-    public int Quantity {get; set;}
-    public char Unit {get; set;}
-
-
-    //Constructors
-    public Ingredient()
-    {}
-
-    public Ingredient(string name, int quantity, char unit)
+    public class Ingredient
     {
-        Id = Guid.NewGuid();
-        Name = name;
-        Quantity = quantity;
-        Unit = unit;
-    }
+        //Properties
+        [Key]
+        public Guid Id {get; set;}
+        public required string Name {get; set;}
+        public int Quantity {get; set;}
+        public char Unit {get; set;}
 
-    //Methods
 
-    // IncreaseQuantity: Increase the quantity of an ingredient 
-    public void IncreaseQuantity(int amount)
-    {
-        Quantity += amount;
-    }
+        //Constructors
+        public Ingredient()
+        {}
 
-    // DecreaseQuantity: Decrease the quantity of an ingredient
-    public void DecreaseQuantity(int amount)
-    {   
-        if (Quantity >= amount)
+        public Ingredient(string name, int quantity, char unit)
         {
-            Quantity -= amount;
-        } else
-        {
-           throw new InvalidOperationException("Not enough quantity to decrease");
+            Id = Guid.NewGuid();
+            Name = name;
+            Quantity = quantity;
+            Unit = unit;
         }
-    }
 
-    // IsAvailable: Checks if there is enough quantity of an ingredient for a recipe
-    public bool IsAvailable(int requiredAmount)
-    {
-        return Quantity >= requiredAmount;
-    }
+        //Methods
 
-    // Clone: Clones an instance of an ingredient
-    public Ingredient Clone()
-    {
-       return new Ingredient
-       {
-        Name = Name,
-        Quantity = Quantity,
-        Unit = Unit
-       };
-    }
+        // IncreaseQuantity: Increase the quantity of an ingredient 
+        public void IncreaseQuantity(int amount)
+        {
+            Quantity += amount;
+        }
 
-}   
+        // DecreaseQuantity: Decrease the quantity of an ingredient
+        public void DecreaseQuantity(int amount)
+        {   
+            if (Quantity >= amount)
+            {
+                Quantity -= amount;
+            } else
+            {
+            throw new InvalidOperationException("Not enough quantity to decrease");
+            }
+        }
+
+        // IsAvailable: Checks if there is enough quantity of an ingredient for a recipe
+        public bool IsAvailable(int requiredAmount)
+        {
+            return Quantity >= requiredAmount;
+        }
+
+        // Clone: Clones an instance of an ingredient
+        public Ingredient Clone()
+        {
+        return new Ingredient
+        {
+            Name = Name,
+            Quantity = Quantity,
+            Unit = Unit
+        };
+        }
+
+    }
+}
+   
