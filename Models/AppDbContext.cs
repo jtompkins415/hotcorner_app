@@ -20,17 +20,17 @@ namespace ConsoleApp.PostgreSQL
         {
             modelBuilder.Entity<MenuItem>()
                 .HasMany(m => m.Ingredients)
-                .WithMany(i => i.MenuItemsIds)
+                .WithMany(i => i.MenuItemsIncluded)
                 .UsingEntity<Dictionary <string, object>>(
                     "MenuItemIngredients",
                     j => j
                         .HasOne<Ingredient>()
                         .WithMany()
-                        .HasForiegnKey("IngredientId"),
+                        .HasForeignKey("IngredientId"),
                     j => j
                         .HasOne<MenuItem>()
                         .WithMany()
-                        .HasForiegnKey("MenuItemId")
+                        .HasForeignKey("MenuItemId")
                 );
         }
     }
