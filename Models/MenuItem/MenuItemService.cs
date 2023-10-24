@@ -22,6 +22,7 @@ namespace HotCorner.Model
             await _context.SaveChangesAsync();
         }
 
+        //RemoveMenuItemAsyc: Remove MenuItem by ID
         public async Task RemoveMenuItemAsync(int menuItemId)
         {   
             MenuItem menuItem = await _context.MenuItems.FindAsync(menuItemId);
