@@ -40,3 +40,12 @@
 /Users/jtompkins/Desktop/CodingEnrichment/side_projects/hotcorner_proj/hotcorner_proj/bin/Debug/net7.0/Microsoft.Extensions.DependencyModel.dll
 /Users/jtompkins/Desktop/CodingEnrichment/side_projects/hotcorner_proj/hotcorner_proj/bin/Debug/net7.0/Mono.TextTemplating.dll
 /Users/jtompkins/Desktop/CodingEnrichment/side_projects/hotcorner_proj/hotcorner_proj/bin/Debug/net7.0/System.CodeDom.dll
+/Users/jtompkins/Desktop/CodingEnrichment/side_projects/hotcorner_proj/hotcorner_proj/bin/Debug/net7.0/BouncyCastle.Cryptography.dll
+/Users/jtompkins/Desktop/CodingEnrichment/side_projects/hotcorner_proj/hotcorner_proj/bin/Debug/net7.0/MailKit.dll
+/Users/jtompkins/Desktop/CodingEnrichment/side_projects/hotcorner_proj/hotcorner_proj/bin/Debug/net7.0/MailKitSimplified.Sender.dll
+/Users/jtompkins/Desktop/CodingEnrichment/side_projects/hotcorner_proj/hotcorner_proj/bin/Debug/net7.0/MimeKit.dll
+/Users/jtompkins/Desktop/CodingEnrichment/side_projects/hotcorner_proj/hotcorner_proj/bin/Debug/net7.0/System.IO.Abstractions.dll
+/Users/jtompkins/Desktop/CodingEnrichment/side_projects/hotcorner_proj/hotcorner_proj/bin/Debug/net7.0/System.Security.Cryptography.Pkcs.dll
+/Users/jtompkins/Desktop/CodingEnrichment/side_projects/hotcorner_proj/hotcorner_proj/bin/Debug/net7.0/TestableIO.System.IO.Abstractions.dll
+/Users/jtompkins/Desktop/CodingEnrichment/side_projects/hotcorner_proj/hotcorner_proj/bin/Debug/net7.0/TestableIO.System.IO.Abstractions.Wrappers.dll
+/Users/jtompkins/Desktop/CodingEnrichment/side_projects/hotcorner_proj/hotcorner_proj/bin/Debug/net7.0/runtimes/win/lib/net7.0/System.Security.Cryptography.Pkcs.dll
