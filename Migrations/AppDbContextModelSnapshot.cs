@@ -23,16 +23,43 @@ namespace hotcorner_proj.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Ingredient", b =>
+            modelBuilder.Entity("HotCorner.Model.Employee", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("EmployeeId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("uuid");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    b.Property<string>("Department")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.Property<int?>("MenuItemId")
-                        .HasColumnType("integer");
+                    b.Property<string>("EmployeeEmail")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<string>("EmployeeName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<string>("Position")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("EmployeeId");
+
+                    b.ToTable("Employees");
+                });
+
+            modelBuilder.Entity("HotCorner.Model.Ingredient", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("MenuItemId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -51,13 +78,11 @@ namespace hotcorner_proj.Migrations
                     b.ToTable("Ingredients");
                 });
 
-            modelBuilder.Entity("MenuItem", b =>
+            modelBuilder.Entity("HotCorner.Model.MenuItem", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Category")
                         .IsRequired()
@@ -85,13 +110,109 @@ namespace hotcorner_proj.Migrations
                     b.ToTable("MenuItems");
                 });
 
-            modelBuilder.Entity("Table", b =>
+            modelBuilder.Entity("HotCorner.Model.Order", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("OrderId")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("EmployeeName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("OrderNum")
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    b.Property<DateTime>("OrderTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("TableId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("TableNumber")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("numeric");
+
+                    b.HasKey("OrderId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("HotCorner.Model.Order+OrderItem", b =>
+                {
+                    b.Property<Guid>("MenuItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("MenuItemName")
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("MenuItemPrice")
+                        .HasColumnType("numeric");
+
+                    b.Property<Guid?>("OrderId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.HasKey("MenuItemId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("OrderItem");
+                });
+
+            modelBuilder.Entity("HotCorner.Model.Reservation", b =>
+                {
+                    b.Property<Guid>("ReservationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CustomerEmail")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CustomerName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<string>("ReservationStatus")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("ReservationTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("TableId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("TableNumber")
+                        .HasColumnType("integer");
+
+                    b.HasKey("ReservationId");
+
+                    b.ToTable("Reservations");
+                });
+
+            modelBuilder.Entity("HotCorner.Model.Table", b =>
+                {
+                    b.Property<Guid>("TableId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
 
                     b.Property<int>("SeatingCapacity")
                         .HasColumnType("integer");
@@ -103,21 +224,33 @@ namespace hotcorner_proj.Migrations
                     b.Property<int>("TableNumber")
                         .HasColumnType("integer");
 
-                    b.HasKey("Id");
+                    b.HasKey("TableId");
 
                     b.ToTable("Tables");
                 });
 
-            modelBuilder.Entity("Ingredient", b =>
+            modelBuilder.Entity("HotCorner.Model.Ingredient", b =>
                 {
-                    b.HasOne("MenuItem", null)
+                    b.HasOne("HotCorner.Model.MenuItem", null)
                         .WithMany("Ingredients")
                         .HasForeignKey("MenuItemId");
                 });
 
-            modelBuilder.Entity("MenuItem", b =>
+            modelBuilder.Entity("HotCorner.Model.Order+OrderItem", b =>
+                {
+                    b.HasOne("HotCorner.Model.Order", null)
+                        .WithMany("OrderItems")
+                        .HasForeignKey("OrderId");
+                });
+
+            modelBuilder.Entity("HotCorner.Model.MenuItem", b =>
                 {
                     b.Navigation("Ingredients");
+                });
+
+            modelBuilder.Entity("HotCorner.Model.Order", b =>
+                {
+                    b.Navigation("OrderItems");
                 });
 #pragma warning restore 612, 618
         }
