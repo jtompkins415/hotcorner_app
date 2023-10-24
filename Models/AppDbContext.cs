@@ -15,6 +15,24 @@ namespace ConsoleApp.PostgreSQL
         public DbSet<Reservation> Reservations {get; set;}
         public DbSet<Order> Orders {get; set;}
         public DbSet<Employee> Employees {get; set;}
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<MenuItem>()
+                .HasMany(m => m.Ingredients)
+                .WithMany(i => i.MenuItemsIds)
+                .UsingEntity<Dictionary <string, object>>(
+                    "MenuItemIngredients",
+                    j => j
+                        .HasOne<Ingredient>()
+                        .WithMany()
+                        .HasForiegnKey("IngredientId"),
+                    j => j
+                        .HasOne<MenuItem>()
+                        .WithMany()
+                        .HasForiegnKey("MenuItemId")
+                );
+        }
     }
 }
 
