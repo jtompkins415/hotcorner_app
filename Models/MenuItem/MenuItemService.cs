@@ -3,7 +3,6 @@
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using ConsoleApp.PostgreSQL;
-using HotCorner.Model;
 
 namespace HotCorner.Model
 {
@@ -24,7 +23,7 @@ namespace HotCorner.Model
         }
 
         public async Task RemoveMenuItemAsync(int menuItemId)
-        {
+        {   
             MenuItem menuItem = await _context.MenuItems.FindAsync(menuItemId);
             _context.Remove(menuItem);
             await _context.SaveChangesAsync();
