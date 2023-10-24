@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace hotcorner_proj.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231023233700_AddNewTables")]
-    partial class AddNewTables
+    [Migration("20231024032636_CreateTables")]
+    partial class CreateTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,9 +28,11 @@ namespace hotcorner_proj.Migrations
 
             modelBuilder.Entity("HotCorner.Model.Employee", b =>
                 {
-                    b.Property<Guid>("EmployeeId")
+                    b.Property<int>("EmployeeId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("EmployeeId"));
 
                     b.Property<string>("Department")
                         .IsRequired()
@@ -57,12 +59,11 @@ namespace hotcorner_proj.Migrations
 
             modelBuilder.Entity("HotCorner.Model.Ingredient", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
 
-                    b.Property<Guid?>("MenuItemId")
-                        .HasColumnType("uuid");
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -76,16 +77,16 @@ namespace hotcorner_proj.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MenuItemId");
-
                     b.ToTable("Ingredients");
                 });
 
             modelBuilder.Entity("HotCorner.Model.MenuItem", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Category")
                         .IsRequired()
@@ -115,12 +116,14 @@ namespace hotcorner_proj.Migrations
 
             modelBuilder.Entity("HotCorner.Model.Order", b =>
                 {
-                    b.Property<Guid>("OrderId")
+                    b.Property<int>("OrderId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
 
-                    b.Property<Guid>("EmployeeId")
-                        .HasColumnType("uuid");
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("OrderId"));
+
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("EmployeeName")
                         .IsRequired()
@@ -136,8 +139,8 @@ namespace hotcorner_proj.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("TableId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("TableId")
+                        .HasColumnType("integer");
 
                     b.Property<int>("TableNumber")
                         .HasColumnType("integer");
@@ -152,9 +155,11 @@ namespace hotcorner_proj.Migrations
 
             modelBuilder.Entity("HotCorner.Model.Order+OrderItem", b =>
                 {
-                    b.Property<Guid>("MenuItemId")
+                    b.Property<int>("MenuItemId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("MenuItemId"));
 
                     b.Property<string>("MenuItemName")
                         .HasColumnType("text");
@@ -162,8 +167,8 @@ namespace hotcorner_proj.Migrations
                     b.Property<decimal>("MenuItemPrice")
                         .HasColumnType("numeric");
 
-                    b.Property<Guid?>("OrderId")
-                        .HasColumnType("uuid");
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("integer");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");
@@ -177,16 +182,18 @@ namespace hotcorner_proj.Migrations
 
             modelBuilder.Entity("HotCorner.Model.Reservation", b =>
                 {
-                    b.Property<Guid>("ReservationId")
+                    b.Property<int>("ReservationId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ReservationId"));
 
                     b.Property<string>("CustomerEmail")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("CustomerId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("CustomerName")
                         .IsRequired()
@@ -200,8 +207,8 @@ namespace hotcorner_proj.Migrations
                     b.Property<DateTime>("ReservationTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("TableId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("TableId")
+                        .HasColumnType("integer");
 
                     b.Property<int>("TableNumber")
                         .HasColumnType("integer");
@@ -213,9 +220,11 @@ namespace hotcorner_proj.Migrations
 
             modelBuilder.Entity("HotCorner.Model.Table", b =>
                 {
-                    b.Property<Guid>("TableId")
+                    b.Property<int>("TableId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("TableId"));
 
                     b.Property<int>("SeatingCapacity")
                         .HasColumnType("integer");
@@ -232,11 +241,19 @@ namespace hotcorner_proj.Migrations
                     b.ToTable("Tables");
                 });
 
-            modelBuilder.Entity("HotCorner.Model.Ingredient", b =>
+            modelBuilder.Entity("MenuItemIngredients", b =>
                 {
-                    b.HasOne("HotCorner.Model.MenuItem", null)
-                        .WithMany("Ingredients")
-                        .HasForeignKey("MenuItemId");
+                    b.Property<int>("IngredientId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("MenuItemId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("IngredientId", "MenuItemId");
+
+                    b.HasIndex("MenuItemId");
+
+                    b.ToTable("MenuItemIngredients");
                 });
 
             modelBuilder.Entity("HotCorner.Model.Order+OrderItem", b =>
@@ -246,9 +263,19 @@ namespace hotcorner_proj.Migrations
                         .HasForeignKey("OrderId");
                 });
 
-            modelBuilder.Entity("HotCorner.Model.MenuItem", b =>
+            modelBuilder.Entity("MenuItemIngredients", b =>
                 {
-                    b.Navigation("Ingredients");
+                    b.HasOne("HotCorner.Model.Ingredient", null)
+                        .WithMany()
+                        .HasForeignKey("IngredientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HotCorner.Model.MenuItem", null)
+                        .WithMany()
+                        .HasForeignKey("MenuItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("HotCorner.Model.Order", b =>
