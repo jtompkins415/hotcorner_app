@@ -1,6 +1,7 @@
 //Public class for Customers
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using MailKitSimplified.Sender.Services;
 
 namespace HotCorner.Model
@@ -9,7 +10,8 @@ namespace HotCorner.Model
     {
         //Properties
         [Key]
-        public Guid CustomerId {get; set;}
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int CustomerId {get; set;}
         
         [MaxLength(255)]
         public required string Name {get; set;}
@@ -64,7 +66,7 @@ namespace HotCorner.Model
         }
 
         //CancelReservation: Remove a reservation from a customer's account
-        public void CancelReservation(Guid reservationId)
+        public void CancelReservation(int reservationId)
         {
             var reservation = UpcomingReservations.FirstOrDefault(r => r.ReservationId == reservationId);
             if (reservation != null)

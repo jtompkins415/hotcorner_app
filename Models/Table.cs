@@ -1,6 +1,7 @@
 //Public class for Tables
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HotCorner.Model
 {
@@ -9,7 +10,8 @@ namespace HotCorner.Model
         //Properties 
 
         [Key]
-        public Guid TableId {get; set;}
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int TableId {get; set;}
         public required int TableNumber {get; set;}
         public required int SeatingCapacity {get; set;}
         public required string Status {get; set;}
@@ -21,7 +23,6 @@ namespace HotCorner.Model
 
         public Table(int tableNumber, int seatingCapacity, string status)
         {
-            TableId = Guid.NewGuid();
             TableNumber = tableNumber;
 
             if(!IsValidSeatingCapacity(seatingCapacity))

@@ -1,6 +1,7 @@
 //Public class for Orders
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HotCorner.Model
 {
@@ -8,12 +9,13 @@ namespace HotCorner.Model
     {
         //Properties
         [Key]
-        public Guid OrderId {get; set;}
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int OrderId {get; set;}
         public int OrderNum {get; set;}
-        public Guid EmployeeId {get; set;}
+        public int EmployeeId {get; set;}
         public required string EmployeeName {get; set;}
         public DateTime OrderTime {get; set;}
-        public Guid TableId {get; set;}
+        public int TableId {get; set;}
         public int TableNumber {get; set;}
         public List<OrderItem> OrderItems {get; set;}
         public required string Status {get; set;}
@@ -24,7 +26,8 @@ namespace HotCorner.Model
         public class OrderItem
         {
             //Properties
-            public Guid MenuItemId {get; set;}
+            [Key]
+            public int MenuItemId {get; set;}
             public string? MenuItemName {get; set;}
             public decimal MenuItemPrice {get; set;}
             public int Quantity {get; set;}
@@ -37,7 +40,6 @@ namespace HotCorner.Model
 
         public Order(int orderNum, Employee employee, DateTime orderTime, Table table, List<OrderItem> orderItems, string status, decimal totalPrice)
         {
-            OrderId = Guid.NewGuid();
             OrderNum = orderNum;
             EmployeeId = employee.EmployeeId;
             EmployeeName = employee.EmployeeName;
@@ -91,7 +93,7 @@ namespace HotCorner.Model
         }
 
         //SplitOrder: Split an order into multiple orders
-        public List<Order> SplitOrder(List<Guid> menuItemIds)
+        public List<Order> SplitOrder(List<int> menuItemIds)
         {   
             var splitOrders = new List<Order>();
 
@@ -103,7 +105,6 @@ namespace HotCorner.Model
                 {
                     var splitOrder = new Order
                     {
-                        OrderId = Guid.NewGuid(),
                         OrderNum = OrderNum + 1,
                         EmployeeId = EmployeeId,
                         EmployeeName = EmployeeName,

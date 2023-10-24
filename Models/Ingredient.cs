@@ -1,6 +1,7 @@
 // Public class for Ingredients
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.VisualBasic;
 
 namespace HotCorner.Model
@@ -9,19 +10,22 @@ namespace HotCorner.Model
     {
         //Properties
         [Key]
-        public Guid Id {get; set;}
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id {get; set;}
         public required string Name {get; set;}
         public int Quantity {get; set;}
         public char Unit {get; set;}
+        public List<int> MenuItemsIds {get; set;}
 
 
         //Constructors
         public Ingredient()
-        {}
+        {
+            MenuItemsIds = new List<int>();
+        }
 
         public Ingredient(string name, int quantity, char unit)
         {
-            Id = Guid.NewGuid();
             Name = name;
             Quantity = quantity;
             Unit = unit;

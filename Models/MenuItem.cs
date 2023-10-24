@@ -1,6 +1,7 @@
 // Public class for Menu Items 
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HotCorner.Model
 {
@@ -9,7 +10,8 @@ namespace HotCorner.Model
         //Properties
 
         [Key]
-        public Guid Id {get; set;}
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id {get; set;}
         [MaxLength(255)]
         public required string Name {get; set;}
         [MaxLength(500)]
@@ -31,7 +33,6 @@ namespace HotCorner.Model
 
         public MenuItem(string name, string description, decimal price, string category, List<Ingredient> ingredients, List<string>? imageUrls)
         {
-            Id = Guid.NewGuid();
             Name = name;
             Description = description;
             Price = price;

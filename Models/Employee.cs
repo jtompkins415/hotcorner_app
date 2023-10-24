@@ -2,6 +2,7 @@
 
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HotCorner.Model
 {
@@ -9,7 +10,8 @@ namespace HotCorner.Model
     {
         //Properties
         [Key]
-        public Guid EmployeeId {get; set;}
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int EmployeeId {get; set;}
         [MaxLength(255)]
         public string EmployeeName {get; set;}
         [MaxLength(255)]

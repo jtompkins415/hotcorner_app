@@ -3,6 +3,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using MailKitSimplified.Sender.Services;
 using MailKitSimplified.Sender.Models;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HotCorner.Model
 {
@@ -11,13 +12,14 @@ namespace HotCorner.Model
         //Properties
 
         [Key]
-        public Guid ReservationId {get; set;}
-        public required Guid CustomerId {get; set;}
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ReservationId {get; set;}
+        public required int CustomerId {get; set;}
         [MaxLength(255)]
         public required string CustomerName {get; set;}
         public required string CustomerEmail {get; set;}
         public required DateTime ReservationTime {get; set;}
-        public required Guid TableId {get; set;}
+        public required int TableId {get; set;}
         public required int TableNumber {get; set;}
         public required string ReservationStatus {get; set;}
 
@@ -30,7 +32,6 @@ namespace HotCorner.Model
 
         public Reservation(Customer customer, Table table, DateTime reservationTime, string status)
         {
-            ReservationId = Guid.NewGuid();
             CustomerId = customer.CustomerId;
             CustomerName = customer.Name;
             CustomerEmail = customer.Email;
