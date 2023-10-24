@@ -20,7 +20,7 @@ namespace HotCorner.Model
         public required decimal Price {get; set;}
         [MaxLength(50)]
         public required string Category {get; set;}
-        public required List<Ingredient> Ingredients {get; set;}
+        public required ICollection<Ingredient> Ingredients {get; set;}
         public List<string>? ImageUrls {get; set;}
         
         //MenuItem Constructors

@@ -15,13 +15,13 @@ namespace HotCorner.Model
         public required string Name {get; set;}
         public int Quantity {get; set;}
         public char Unit {get; set;}
-        public List<int> MenuItemsIds {get; set;}
+        public ICollection<MenuItem> MenuItemsIncluded {get; set;}
 
 
         //Constructors
         public Ingredient()
         {
-            MenuItemsIds = new List<int>();
+            MenuItemsIncluded = new List<MenuItem>();
         }
 
         public Ingredient(string name, int quantity, char unit)
