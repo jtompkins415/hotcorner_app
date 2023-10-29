@@ -15,7 +15,7 @@ namespace HotCorner.Model
         public required string Name {get; set;}
         public int Quantity {get; set;}
         public char Unit {get; set;}
-        public ICollection<MenuItem> MenuItemsIncluded {get; set;}
+        public ICollection<MenuItem>? MenuItemsIncluded {get; set;}
 
 
         //Constructors
