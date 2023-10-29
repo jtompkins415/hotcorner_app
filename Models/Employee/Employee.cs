@@ -1,6 +1,5 @@
 //Public class for Employee
 
-using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -13,13 +12,13 @@ namespace HotCorner.Model
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int EmployeeId {get; set;}
         [MaxLength(255)]
-        public string EmployeeName {get; set;}
+        public required string EmployeeName {get; set;}
         [MaxLength(255)]
-        public string EmployeeEmail {get; set;}
-        public string Department {get; set;}
-        public string Position {get; set;}
-        public decimal Salary {get; set;}
-        public string Status {get; set;}
+        public required string EmployeeEmail {get; set;}
+        public required string Department {get; set;}
+        public required string Position {get; set;}
+        public required decimal Salary {get; set;}
+        public required string Status {get; set;}
 
         
 
