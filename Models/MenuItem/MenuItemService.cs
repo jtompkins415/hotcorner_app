@@ -15,12 +15,16 @@ namespace HotCorner.Model
         }                                                 
 
         //AddMenuItemAsync: Add new MenuItem to MenuItems Table
-        public async Task AddMenuItemAsync(MenuItem menuItem)
+        public async Task AddMenuItemAsync(MenuItem? menuItem)
         {
             try
             {
-                _context.MenuItems.Add(menuItem);
-                await _context.SaveChangesAsync();
+                if(menuItem != null)
+                {
+                    _context.MenuItems.Add(menuItem);
+                    await _context.SaveChangesAsync();
+                }
+                
             }
             catch (Exception err)
             {
@@ -31,30 +35,35 @@ namespace HotCorner.Model
 
 
         //ReadMenuItemAsync: Returns MenuItem based on a given ID
-        public async Task<MenuItem> ReadMenuItemAsync(int menuItemId)
+        public async Task<MenuItem?> ReadMenuItemAsync(int menuItemId)
         {
-            MenuItem menuItem = await _context.MenuItems.FindAsync(menuItemId);
+            MenuItem? menuItem = await _context.MenuItems.FindAsync(menuItemId);
             return menuItem;
         }
 
         //RemoveMenuItemAsyc: Remove MenuItem by ID
         public async Task RemoveMenuItemAsync(int menuItemId)
         {   
-            MenuItem menuItem = await _context.MenuItems.FindAsync(menuItemId);
-            _context.Remove(menuItem);
-            await _context.SaveChangesAsync();
+            MenuItem? menuItem = await _context.MenuItems.FindAsync(menuItemId);
+
+            if(menuItem != null)
+            {
+                _context.Remove(menuItem);
+                await _context.SaveChangesAsync();  
+            }
+            
         }
 
         //UpdateMenuItemAsync: Update properties of an existing MenuItem
         public async Task<bool> UpdateMenuItemAsync(
             int menuItemId,
-            string name = null,
-            string description = null,
+            string? name = null,
+            string? description = null,
             decimal? price = null,
-            string category = null
+            string? category = null
         )
         {
-            MenuItem itemToUpdate = await _context.MenuItems.FirstOrDefaultAsync(m => m.Id == menuItemId);
+            MenuItem? itemToUpdate = await _context.MenuItems.FirstOrDefaultAsync(m => m.Id == menuItemId);
 
             if(itemToUpdate == null)
             {
