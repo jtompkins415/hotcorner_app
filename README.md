@@ -79,7 +79,7 @@ No current budget in place.
 
 ## Conclusion
 
-The "RestaurantPlus" project aims to create an innovative and robust restaurant management system that combines point of sale features with a reservation platform to optimize restaurant operations. By enhancing order efficiency, reservation management, and customer engagement, this system will provide significant benefits to restaurant owners, staff, and customers alike.
+The "HotCorner" project aims to create an innovative and robust restaurant management system that combines point of sale features with a reservation platform to optimize restaurant operations. By enhancing order efficiency, reservation management, and customer engagement, this system will provide significant benefits to restaurant owners, staff, and customers alike.
 
 # REQUIREMENTS
 
