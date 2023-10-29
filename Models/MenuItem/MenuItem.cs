@@ -38,7 +38,7 @@ namespace HotCorner.Model
             Price = price;
             Category = category;
             Ingredients = ingredients;
-            ImageUrls = imageUrls;
+            ImageUrls = imageUrls ?? new List<string>();
         }
 
         //Methods
@@ -65,14 +65,22 @@ namespace HotCorner.Model
         //AddImageUrl: Add image to list for menu item
         public void AddImageUrl(string imageUrl)
         {
-            ImageUrls.Add(imageUrl);
+            if(ImageUrls != null)
+            {
+                ImageUrls.Add(imageUrl);
+            }
+            
 
         }
 
         //RemoveImageUrl: Remove an image Url from list
         public void RemoveImageUrl(string imageUrl)
         {
-            ImageUrls.Remove(imageUrl);
+            if(ImageUrls != null)
+            {
+              ImageUrls.Remove(imageUrl);  
+            }
+            
         }
 
         //UpdateDescription: Update the description of the menu item
@@ -97,7 +105,7 @@ namespace HotCorner.Model
                 Price = Price,
                 Category = Category,
                 Ingredients = new List<Ingredient>(Ingredients),
-                ImageUrls = new List<string>(ImageUrls)
+                ImageUrls = new List<string>(ImageUrls ?? new List<string>())
             };
         }
     }
