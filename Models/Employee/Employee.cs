@@ -18,6 +18,24 @@ namespace HotCorner.Model
         public string EmployeeEmail {get; set;}
         public string Department {get; set;}
         public string Position {get; set;}
+        public decimal Salary {get; set;}
+        public string Status {get; set;}
+
         
+
+        //Constructor
+
+        public Employee()
+        {}
+
+        public Employee(string name, string email, string department, string position, decimal salary, string status)
+        {
+            EmployeeName = name;
+            EmployeeEmail = email;
+            Department = department;
+            Position = position;
+            Salary = salary;
+            Status = status;
+        } 
     }
 }
